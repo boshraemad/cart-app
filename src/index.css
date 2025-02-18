@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+ .cart-num{
+  width:18px;
+  height:18px;
+  line-height: 10px;
+  top:0;
+  left:40px;
+  font-size:14px;
+ }
