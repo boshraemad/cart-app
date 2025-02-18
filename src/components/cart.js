@@ -5,9 +5,15 @@ import { deleteFromCart , clearCart } from "../rtk/slices/cart-slice";
 function Cart(){
     let products=useSelector(state=>state.cart);
     let dispatch=useDispatch();
+
+    const totalPrice=products.reduce((acc,product)=>{
+        acc+=product.price*product.quantity
+        return acc;
+    },0)
     return(
        <Container className="py-5">
                 <button className="btn mt-4 btn-primary" onClick={()=>{dispatch(clearCart())}}>clear cart</button>
+                <h5 className="mt-5">total price: {totalPrice.toFixed(2)}$</h5>
                 <Table striped bordered hover className=" mt-4">
       <thead>
         <tr>
@@ -26,8 +32,8 @@ function Cart(){
                             <td>{product.id}</td>
                             <td>{product.title}</td>
                             <td><img src={product.image} style={{width:"100px" , height:"auto"}}/></td>
-                            <td>{product.price}</td>
-                            <td>1</td>
+                            <td>{product.price}$</td>
+                            <td>{product.quantity}</td>
                             <td>
                                 <button className="btn btn-danger" onClick={()=>{dispatch(deleteFromCart(product))}}>remove</button>
                                 {/* plus icon minus icon to control product quatity*/}
