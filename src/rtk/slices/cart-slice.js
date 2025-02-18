@@ -9,8 +9,8 @@ export const cartSlice = createSlice({
            if(findProduct){
                 findProduct.quantity+=1;
            }else{
-                const productsClone={...action.payload,quantity:1}//destructing
-                state.push(productsClone);
+                const productClone={...action.payload,quantity:1}//destructing
+                state.push(productClone);
            }
         },
 
@@ -18,6 +18,15 @@ export const cartSlice = createSlice({
            return state.filter((product)=>product.id!==action.payload.id)
         },
 
+        minusQuantity(state,action){
+            const findProduct= state.find((product)=>product.id===action.payload.id);
+            if (findProduct.quantity > 1) {
+              findProduct.quantity -= 1;
+            }else{
+               return state.filter((product)=>product.id!==action.payload.id);
+            }
+
+        },
         clearCart(){return[]}
 
     },
@@ -25,4 +34,4 @@ export const cartSlice = createSlice({
   })
 
   export default cartSlice.reducer;
-  export const{addToCart,deleteFromCart,clearCart}=cartSlice.actions;
+  export const{addToCart,deleteFromCart,clearCart,minusQuantity}=cartSlice.actions;

@@ -1,7 +1,10 @@
 import { useSelector,useDispatch} from "react-redux";
 import Table from 'react-bootstrap/Table';
 import { Container } from "react-bootstrap";
-import { deleteFromCart , clearCart } from "../rtk/slices/cart-slice";
+import { deleteFromCart , clearCart, addToCart ,minusQuantity } from "../rtk/slices/cart-slice";
+import { FaPlus } from "react-icons/fa";
+import { FaMinus } from "react-icons/fa";
+import { FaLongArrowAltRight } from "react-icons/fa";
 function Cart(){
     let products=useSelector(state=>state.cart);
     let dispatch=useDispatch();
@@ -12,7 +15,7 @@ function Cart(){
     },0)
     return(
        <Container className="py-5">
-                <button className="btn mt-4 btn-primary" onClick={()=>{dispatch(clearCart())}}>clear cart</button>
+                <button className="btn mt-4 btn-secondary" onClick={()=>{dispatch(clearCart())}}>clear cart</button>
                 <h5 className="mt-5">total price: {totalPrice.toFixed(2)}$</h5>
                 <Table striped bordered hover className=" mt-4">
       <thead>
@@ -36,7 +39,9 @@ function Cart(){
                             <td>{product.quantity}</td>
                             <td>
                                 <button className="btn btn-danger" onClick={()=>{dispatch(deleteFromCart(product))}}>remove</button>
-                                {/* plus icon minus icon to control product quatity*/}
+                                <button className="btn" onClick={()=>{dispatch(addToCart(product))}}><FaPlus/></button>
+                                <span>{product.quantity}</span>
+                                <button className="btn" onClick={()=>{dispatch(minusQuantity(product))}}><FaMinus /></button>
                             
                             </td>
                         </tr>
@@ -44,6 +49,7 @@ function Cart(){
             })}
       </tbody>
     </Table>
+            <button className="btn btn-success mt-4">Ckeck out <FaLongArrowAltRight /></button>
        </Container>
     )
 }
